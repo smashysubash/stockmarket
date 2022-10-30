@@ -29,8 +29,8 @@ const keys = [
     'KQL8GE5XT1OW4BYE',
     '7HHQKXQVHUOZ6TM0',
     'XY89PZRETBBWKVTF'];
-console.log(keys);
-var keyi=0;
+//console.log(keys);
+let keyi=0;
 let search = document.getElementById('search');
 let container  = document.getElementById('container');
 let error  = document.getElementById('error');
@@ -46,16 +46,18 @@ search.addEventListener('keypress',function(e)
 
     if(search.value.length > 0)
     {
-        let endPoint = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords="+search.value+"&apikey="+keys[(keyi++)%keys.length];
+        let endPoint = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords="+search.value+"&apikey="+keys[keyi%30];
         fetch(endPoint)
             .then(response => response.json())
             .then(result => {
-                console.log(keyi + "  "+keys[(keyi-1)%keys.length]+" "+result);
+                keyi++;
+                //console.log(keyi + "  "+keys[(keyi-1)%keys.length]+" "+result);
                 if(result.status == 404 && result.message == "Not Found")
                 {
                     error.innerHTML = "Try after some Time!";
                     return;
                 }
+                
                 let bestmatch = result.bestMatches;
                 for(let stocks of bestmatch){
                     //console.log(stocks['1. symbol']);
@@ -68,25 +70,6 @@ search.addEventListener('keypress',function(e)
                             </div>
                         </div>`
                 }
-                
-                // for(let country of result)
-                // {
-                //     let names = Object.values(country.languages);
-                //     let namesA = "";
-                //     for(let values of names)
-                //     {
-                //         namesA += values + ' | ';
-                //     }
-                //     countries += 
-                //         `<div class="card rm bm">
-                //             <img class="flag" src="${country.flags.svg}">
-                //             <div>
-                //                 <div class="name lm">${country.name.common}</div>
-                //                 <div class="capital lm">${country.capital}</div>
-                //                 <div class="languages lm bm">${namesA}</div>
-                //             </div>
-                //         </div>`;
-                // }
                     container.innerHTML = countries;
             });  
     }
@@ -96,19 +79,26 @@ search.addEventListener('keypress',function(e)
 function companyview(sym){
     container.style.display = "none";
     table.style.display = "table";
-    console.log(sym);
-    let endPoint = "https://www.alphavantage.co/query?function=OVERVIEW&symbol="+sym+"&apikey=ACK3S876HS9TWYS1";
+//    console.log(sym);
+    let endPoint = "https://www.alphavantage.co/query?function=OVERVIEW&symbol="+sym+"&apikey="+keys[keyi%30];
         fetch(endPoint)
             .then(response => response.json())
             .then(result => {
+                keyi++;
+                let ss =JSON.stringify(result);
                 if(result.status == 404 && result.message == "Not Found")
                 {
                     error.innerHTML = "Try after some Time!";
                     return;
                 }
+                if(ss="1{}1"){
+                    container.style.display = "flex";
+                    container.innerHTML = "No data found";
+                    return;
+                }
                 var table = document.querySelector('table');
                 var rows = '';
-
+                rows += '<tr><td>' + "key" + '</td><td>' + keys[(keyi-1)%30] + '</td></tr>'
                 for(var t in result){
                     rows += '<tr><td>' + t + '</td><td>' + result[t] + '</td></tr>'
                 }
