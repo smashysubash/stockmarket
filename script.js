@@ -94,7 +94,12 @@ function companyview(sym){
                     container.innerHTML = "No data found";
                     table.style.display = "table";
                     return;
+                }else if(ss.substring(0,3)==='{"N'){
+                    container.style.display = "flex";
+                    container.innerHTML = "Error!! Try again";
+                    table.style.display = "table";
                 }
+                console.log(ss);
                 var table = document.querySelector('table');
                 var rows = '';
                 for(var t in result){
