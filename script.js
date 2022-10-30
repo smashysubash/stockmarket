@@ -77,8 +77,6 @@ search.addEventListener('keypress',function(e)
 });
 
 function companyview(sym){
-    container.style.display = "none";
-    table.style.display = "table";
 //    console.log(sym);
     let endPoint = "https://www.alphavantage.co/query?function=OVERVIEW&symbol="+sym+"&apikey="+keys[keyi%30];
         fetch(endPoint)
@@ -91,17 +89,20 @@ function companyview(sym){
                     error.innerHTML = "Try after some Time!";
                     return;
                 }
-                if(ss="1{}1"){
+                if(ss==="{}"){
                     container.style.display = "flex";
                     container.innerHTML = "No data found";
+                    table.style.display = "table";
                     return;
                 }
                 var table = document.querySelector('table');
                 var rows = '';
-                rows += '<tr><td>' + "key" + '</td><td>' + keys[(keyi-1)%30] + '</td></tr>'
                 for(var t in result){
                     rows += '<tr><td>' + t + '</td><td>' + result[t] + '</td></tr>'
                 }
                 table.innerHTML = rows;
+                
+                container.style.display = "none";
+                table.style.display = "table";
             });    
 }
