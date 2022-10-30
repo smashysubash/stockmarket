@@ -1,0 +1,18 @@
+
+* { box-sizing: border-box }
+body { font-style: italic }
+.container { display: flex; width: 80%; flex-wrap: wrap; margin: auto; visibility: visible;  }
+ .card { display: flex; border: 0.1rem solid #EEE; width: 49% } 
+/* a{display: flex; border: 0.1rem solid #EEE; width: 49%; text-decoration: none; } */
+.lm { margin-left: 0.5rem }
+.bm { margin-bottom: 0.5rem }
+.rm { margin-right: 0.5rem }
+.flag { width: 9rem }
+.name { font-size: 1.2rem }
+.capital { color: green; font-size: 0.8rem; font-weight: bold }
+.languages { color: blue; font-size: 0.8rem }
+input { width: 100%; padding: 0.75rem; border: 0.1rem solid #DDD; outline: 0 }
+.error { font-size: small; color: red }
+tr:nth-child(even) {background-color: #f2f2f2;}
+#table{margin-left: 1rem;}
+.inst{position:absolute; left: 80%;}
